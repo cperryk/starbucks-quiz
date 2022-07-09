@@ -44,7 +44,7 @@ $(function () {
     this.btn_next = $('#next_btn');
     this.currentLocation = 0;
     var self = this;
-    this.makeLeafletMap('map_container', 'http://a.tiles.mapbox.com/v3/slate.map-cj1hr55j.jsonp', function () {
+    this.makeLeafletMap('map_container', 'https://api.mapbox.com/styles/v1/cperryk/ckxjtt1542e4z14ucgonwii04/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiY3BlcnJ5ayIsImEiOiJja3hqdG1kZzYweHhmMzFxdzM3NnBrNG5pIn0.SW_C8MZfthNo6lLgkHqsFA', function () {
       self.goToLocation(0);
     });
   }
@@ -248,25 +248,22 @@ $(function () {
   };
   Interactive.prototype.makeLeafletMap = function (container, url, callback) {
     var self = this;
-    wax.tilejson(url,
-      function (tilejson) {
-        self.tileLayer = new wax.leaf.connector(tilejson);
-        self.m = new L.Map(container, {
-          scrollWheelZoom: false,
-          zoomControl: false,
-          attributionControl: false,
-          minZoom: 9,
-          doubleClickZoom: false
-        })
-          /*
-          .on('moveend',function(){
-              console.log(this.getCenter());
-          })*/
-          .addControl(new L.Control.Zoom({ position: 'topright' }))
-          .setView(new L.LatLng(18.1, -15.95), 3);
-        if (callback) { callback(); }
-      }
-    );
+    self.m = new L.Map(container, {
+      scrollWheelZoom: false,
+      zoomControl: false,
+      attributionControl: false,
+      minZoom: 9,
+      doubleClickZoom: false
+    })
+      /*
+      .on('moveend',function(){
+          console.log(this.getCenter());
+      })*/
+      .addControl(new L.Control.Zoom({ position: 'topright' }))
+      .setView(new L.LatLng(18.1, -15.95), 3);
+
+    self.tileLayer = L.tileLayer('https://api.mapbox.com/styles/v1/cperryk/ckxjtt1542e4z14ucgonwii04/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiY3BlcnJ5ayIsImEiOiJja3hqdG1kZzYweHhmMzFxdzM3NnBrNG5pIn0.SW_C8MZfthNo6lLgkHqsFA').addTo(self.m);
+    if (callback) { callback(); }
   };
   Interactive.prototype.setLocationOnMap = function (city) {
     var self = this;

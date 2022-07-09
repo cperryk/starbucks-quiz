@@ -89,6 +89,7 @@
       z-index: 5;
       cursor: default;
       border-top: 1px solid #bdbdbd;
+      z-index:9999;
     }
 
     #quiz_UI_row1 {
@@ -255,5 +256,9 @@
       z-index: 9;
       padding: 3px;
       display: none;
+    }
+
+    .leaflet-pane{
+      z-index:1;
     }
   
