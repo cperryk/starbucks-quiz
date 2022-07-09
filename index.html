@@ -1,76 +1,112 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400&amp;display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<body>
+  <body>
+    <script type="text/javascript" src="locations.js"></script>
+    <script type="text/javascript" src="jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="leaflet/leaflet.js"></script>
+    <link rel="stylesheet" href="leaflet/leaflet.css" />
+    <link rel="stylesheet" href="starbucks.css" />
+    <link rel="stylesheet" href="intro.css" />
+    <script type="text/javascript" src="leaflet.zoomfs.js"></script>
+    <script type="text/javascript" src="starbucks.js"></script>
 
-  <script type="text/javascript" src="locations.js"></script>
-  <script type="text/javascript" src="jquery-1.8.2.min.js"></script>
-  <script type="text/javascript" src="leaflet/leaflet.js"></script>
-  <link rel="stylesheet" href="leaflet/leaflet.css" />
-  <link rel="stylesheet" href="starbucks.css" />
-  <link rel="stylesheet" href="intro.css" />
-  <script type="text/javascript" src="leaflet.zoomfs.js"></script>
-  <script type="text/javascript" src="starbucks.js"></script>
+    <div class="intro">
+      <h1>Starbucks Map Quiz</h1>
 
+      <p>
+        This is a restoration of the
+        <a
+          href="http://www.slate.com/articles/news_and_politics/map_of_the_week/2013/07/starbucks_locations_quiz_name_the_city_by_its_starbucks_stores.html"
+          ><i>Slate</i> Starbucks Quiz from 2013</a
+        >.
+      </p>
 
-  <div class="intro">
-    <h1>Starbucks Map Quiz</h1>
+      <p>
+        As <i>Slate</i>'s website has evolved, many old interactive projects
+        became broken, and fixing them all is infeasible. I've restored this one
+        because it's a good example of the type of thing I loved to build at
+        Slate: A game with an edge of commentary. Enjoy!
+      </p>
 
-    <p>This is a restoration of the <a href="http://www.slate.com/articles/news_and_politics/map_of_the_week/2013/07/starbucks_locations_quiz_name_the_city_by_its_starbucks_stores.html"><i>Slate</i> Starbucks Quiz from 2013</a>.</p>
+      <p style="text-align: right">
+        – Chris Kirk, former Interactives Editor of Slate.com
+      </p>
+    </div>
 
-    <p>
-      As <i>Slate</i>'s website has evolved, many old interactive projects became broken, and fixing them all is infeasible. I've restored this one because it's a good example of the type of thing I loved to build at Slate: A game with an edge of commentary. Enjoy!
-    </p>
-
-    <p style="text-align:right">
-      – Chris Kirk, former Interactives Editor of Slate.com
-    </p>
-  </div>
-
-  <div id="interactive">
-    <div id="outer_container">
-      <div id="map_container">
-        <div id="map_attribution">&#169; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors
+    <div id="interactive">
+      <div id="outer_container">
+        <div id="map_container">
+          <div id="map_attribution">
+            &#169;
+            <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>
+            contributors
+          </div>
+          <div id="quiz_header">
+            <p id="quiz_title">
+              The <strong><em>Slate</em></strong> Starbucks Map Quiz
+            </p>
+            <div id="quiz_nav">
+              <div id="btn_left" class="btn_quiznav">&#171;</div>
+              <div id="location_readout"></div>
+              <div id="btn_right" class="btn_quiznav">&#187;</div>
+            </div>
+            <div id="quiz_score_readout">
+              Correct: <span id="correct_here">0</span>
+            </div>
+          </div>
+          <div id="quiz_UI">
+            <div id="quiz_UI_row1">
+              <div id="quiz_question">
+                Which of the following cities is this?
+              </div>
+              <div id="answer_choices"></div>
+            </div>
+            <div id="quiz_UI_row2">
+              <span id="answer_correct" class="answer_feedback">Correct!</span>
+              <span id="answer_incorrect" class="answer_feedback"
+                >Incorrect.</span
+              >
+              <div id="btn_next"></div>
+            </div>
+          </div>
+          <table id="quiz_end" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="vertical-align: middle; height: 615px">
+                <p id="game_over">Quiz Complete!</p>
+                <p id="you_scored">
+                  You scored <span id="final_score_here"></span> out of
+                  <span class="question_count_here"></span>
+                </p>
+                <p id="your_rank">
+                  Your rank: <span id="your_rank_here"></span>
+                </p>
+                <p id="average_score">
+                  Average score: <span id="average_score_here">Loading...</span>
+                </p>
+                <p id="share_btns">
+                  <span id="share_btns_inner"
+                    ><span class="btn_share" id="btn_fb_share"
+                      >Share on Facebook</span
+                    >
+                    |
+                    <span class="btn_share" id="btn_tw_share"
+                      >Share on Twitter</span
+                    ></span
+                  >
+                </p>
+              </td>
+            </tr>
+          </table>
         </div>
-        <div id="quiz_header">
-          <p id="quiz_title">The <strong><em>Slate</em></strong> Starbucks Map Quiz</p>
-          <div id="quiz_nav">
-            <div id="btn_left" class="btn_quiznav">&#171;</div>
-            <div id="location_readout"></div>
-            <div id="btn_right" class="btn_quiznav">&#187;</div>
-          </div>
-          <div id="quiz_score_readout">
-            Correct: <span id="correct_here">0</span>
-          </div>
-        </div>
-        <div id="quiz_UI">
-          <div id="quiz_UI_row1">
-            <div id="quiz_question">Which of the following cities is this?</div>
-            <div id="answer_choices"></div>
-          </div>
-          <div id="quiz_UI_row2">
-            <span id="answer_correct" class="answer_feedback">Correct!</span>
-            <span id="answer_incorrect" class="answer_feedback">Incorrect.</span>
-            <div id="btn_next"></div>
-          </div>
-        </div>
-        <table id="quiz_end" cellpadding="0" cellspacing="0">
-          <tr>
-            <td style="vertical-align:middle;height:615px">
-              <p id="game_over">Quiz Complete!</p>
-              <p id="you_scored">You scored <span id="final_score_here"></span> out of <span
-                  class="question_count_here"></span></p>
-              <p id="your_rank">Your rank: <span id="your_rank_here"></span></p>
-              <p id="average_score">Average score: <span id="average_score_here">Loading...</span></p>
-              <p id="share_btns"><span id="share_btns_inner"><span class="btn_share" id="btn_fb_share">Share on
-                    Facebook</span> | <span class="btn_share" id="btn_tw_share">Share on Twitter</span></span></p>
-            </td>
-          </tr>
-        </table>
       </div>
     </div>
-  </div><!-- end interactive -->
-
-</body>
-
+    <!-- end interactive -->
+  </body>
 </html>
